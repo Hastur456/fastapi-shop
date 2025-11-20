@@ -23,5 +23,5 @@ class CategoryRepository:
         db_category = Category(**category_data.model_dump())
         self.db.add(db_category)
         self.db.commit()
-        self.db.refresh()
+        self.db.refresh(category_data)
         return db_category
