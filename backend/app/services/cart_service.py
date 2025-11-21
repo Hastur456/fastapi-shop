@@ -39,7 +39,7 @@ class CartService:
         
         return cart_data
 
-    def update_cart_item(self, cart_data: Dict[UUID, int], product_id: UUID) -> Dict[UUID, int]:
+    def remove_from_cart(self, cart_data: Dict[UUID, int], product_id: UUID) -> Dict[UUID, int]:
         if product_id not in cart_data:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,

@@ -8,7 +8,7 @@ from ..database import Base
 class Product(Base):
     __tablename__ = "products"
 
-    id = Column(UUID, default=uuid4, primary_key=True, index=True)
+    id = Column(String, default=str(uuid4()), primary_key=True, index=True)
     name = Column(String, unique=True, nullable=False, index=True)
     description = Column(Text)
     price = Column(Float, nullable=False)
