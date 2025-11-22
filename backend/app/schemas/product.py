@@ -20,7 +20,7 @@ class ProductCreate(ProductBase):
 class ProductResponse(BaseModel):    
     model_config = ConfigDict(from_attributes=True)
 
-    id: str = Field(..., description="Product ID")
+    id: str = Field(default_factory=lambda: str(uuid4()), description="Product ID")
     name: str
     description: str | None
     price: float

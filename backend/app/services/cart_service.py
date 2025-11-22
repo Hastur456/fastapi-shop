@@ -4,14 +4,14 @@ from ..repositories.product_repository import ProductRepository
 from ..schemas.cart import CartResponse, CartItemCreate, CartItemUpdate, CartItem
 
 from fastapi import HTTPException, status
-from uuid import UUID, uuid4
+from uuid import uuid4
 
 
 class CartService:
     def __init__(self, db: Session):
         self.product_repository = ProductRepository(db)
 
-    def add_to_cart(self, cart_data: Dict[UUID, int], item: CartItemCreate) -> Dict[UUID, int]:
+    def add_to_cart(self, cart_data: Dict[str, int], item: CartItemCreate) -> Dict[str, int]:
         product = self.product_repository.get_by_id(item.product_id)
 
         if not product:
@@ -28,7 +28,7 @@ class CartService:
 
         return cart_data
     
-    def update_cart_item(self, cart_data: Dict[UUID, int], item: CartItemUpdate) -> Dict[UUID, int]:
+    def update_cart_item(self, cart_data: Dict[str, int], item: CartItemUpdate) -> Dict[str, int]:
         if item.product_id not in cart_data:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
@@ -39,7 +39,7 @@ class CartService:
         
         return cart_data
 
-    def remove_from_cart(self, cart_data: Dict[UUID, int], product_id: UUID) -> Dict[UUID, int]:
+    def remove_from_cart(self, cart_data: Dict[str, int], product_id: str) -> Dict[str, int]:
         if product_id not in cart_data:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
@@ -49,7 +49,7 @@ class CartService:
         del cart_data[product_id]
         return cart_data
     
-    def get_cart_details(self, cart_data: Dict[UUID, int]) -> CartResponse:
+    def get_cart_details(self, cart_data: Dict[str, int]) -> CartResponse:
         if not cart_data:
             return CartResponse(items=[], total=0.0, items_count=0)
         

@@ -4,8 +4,8 @@ from typing import List
 from ..database import get_db
 from ..services.cart_service import CartService
 from ..schemas.cart import CartItem, CartItemCreate, CartResponse, CartItemUpdate
-from pydantic import BaseModel
-from uuid import UUID
+from pydantic import BaseModel, Field
+from uuid import UUID, uuid4
 from typing import Dict
 
 
@@ -16,8 +16,10 @@ router = APIRouter(
 
 
 class AddToCartRequest(BaseModel):
-    product_id: str
-    quantity: int
+    product_id: str = Field(default_factory=lambda: str(uuid4()), 
+                description="Product ID", 
+                examples=["a0eeb99d-9c0b-4ef8-bb6d-6bb9bd380a11"])
+    quantity: int = Field(default=1, gt=0, description="Product Quantity")
     cart: Dict[str, int] = {}
 
 class UpdateCartRequest(BaseModel):

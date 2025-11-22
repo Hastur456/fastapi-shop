@@ -1,16 +1,24 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from .config import settings
-from .database import init_db
+from .database import init_db, Base, engine
 from .routes import products_router, categories_router, cart_router
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_db() 
+    yield
+    engine.dispose()
 
 app = FastAPI(
     title=settings.app_name,
     debug=settings.debug,
     docs_url="/api/docs",
-    redoc_url="/api/redoc"
+    redoc_url="/api/redoc",
+    lifespan=lifespan
 )
 
 app.add_middleware(

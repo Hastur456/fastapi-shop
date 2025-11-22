@@ -5,7 +5,7 @@ from ..repositories.category_repository import CategoryRepository
 from ..schemas.product import ProductCreate, ProductResponse, ProductListResponse
 from fastapi import HTTPException, status
 
-from uuid import UUID, uuid4
+from uuid import uuid4
 
 
 class ProductService():
@@ -19,7 +19,7 @@ class ProductService():
 
         return ProductListResponse(products=products_response, total=len(products_response))
 
-    def get_product_by_id(self, product_id: UUID) -> ProductResponse: 
+    def get_product_by_id(self, product_id: str) -> ProductResponse: 
         product = self.product_repository.get_by_id(product_id)
 
         if not product:
@@ -46,5 +46,3 @@ class ProductService():
             products=products_response,
             total=len(products_response)
         )
-    
-    
