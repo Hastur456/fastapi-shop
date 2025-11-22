@@ -26,7 +26,7 @@ class ProductResponse(BaseModel):
     price: float
     category_id: int
     image_url: str | None
-    create_at: datetime
+    create_at: datetime = Field(alias="created_at")
     category: CategoryResponse = Field(..., description="Product category details")
 
 
