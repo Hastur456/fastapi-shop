@@ -27,4 +27,4 @@ class CategoryService():
     def create_category(self, category_data: CategoryCreate) -> CategoryResponse:
         category = self.repository.create(category_data)
 
-        return CategoryResponse.model_validate(category_data)    
+        return CategoryResponse.model_validate(category)    
