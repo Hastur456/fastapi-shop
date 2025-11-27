@@ -31,16 +31,16 @@ class RemoveFromCartRequest(BaseModel):
     cart: Dict[str, int] = {}
 
 
-@router.get("/", response_model=CartResponse, status_code=status.HTTP_200_OK)
+@router.post("/", response_model=CartResponse, status_code=status.HTTP_200_OK)
 def get_cart(
     cart_data: Dict[str, int],
     db: Session = Depends(get_db)
 ):
     service = CartService(db)
-    return service.get_cart_details(cart_data={})
+    return service.get_cart_details(cart_data)
 
 @router.post("/add", status_code=status.HTTP_200_OK)
-def add_to_cart(
+def add_to_cart(    
     request: AddToCartRequest,
     db: Session = Depends(get_db)
 ):

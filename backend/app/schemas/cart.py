@@ -27,7 +27,7 @@ class CartItem(BaseModel):
 
 
 class CartResponse(BaseModel):
-    items: List[CartItem] = Field(..., description="List of Items in card")
+    items: list[CartItem] = Field(..., description="List of Items in card")
     total: float = Field(..., description="Total card price")
     items_count: int = Field(..., description="Total number of items in card")
     
